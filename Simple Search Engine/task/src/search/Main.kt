@@ -5,10 +5,10 @@ fun main() {
     // clarify how many lines of input to be used
     println("Enter the number of people:")
     print("> ")
-    var numberOfInputLines = readLine()!!.toInt()
+    val numberOfInputLines = readLine()!!.toInt()
 
     // fill input matrix line by line
-    var inputMatrix = mutableListOf<List<String>>(listOf<String>())
+    val inputMatrix = mutableListOf<List<String>>(listOf<String>())
     println("Enter all people:")
     repeat(numberOfInputLines) {
         print("> ")
@@ -19,16 +19,16 @@ fun main() {
     println()
     println("Enter the number of search queries:")
     print("> ")
-    var numberOfSearchQueries = readLine()!!.toInt()
+    val numberOfSearchQueries = readLine()!!.toInt()
 
     // perform search queries in sequence
     repeat(numberOfSearchQueries) {
         println()
         println("Enter data to search people:")
         print("> ")
-        var termToSearch = readLine()!!
-        var searchResults = search(termToSearch, inputMatrix)
-        if(searchResults.size > 0) {
+        val termToSearch = readLine()!!
+        val searchResults = search(termToSearch, inputMatrix)
+        if(searchResults.isNotEmpty()) {
             println()
             println("People found:")
             for(line in searchResults)
@@ -40,7 +40,7 @@ fun main() {
 }
 
 fun search(term:String, inputs:List<List<String>>):List<String> {
-    var results = mutableListOf<String>()
+    val results = mutableListOf<String>()
     for(line in inputs)
         for(item in line)
             if(item.contains(term, ignoreCase = true)) {
