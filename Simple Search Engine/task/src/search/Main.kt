@@ -15,31 +15,45 @@ fun main() {
         inputMatrix.add(readLine()!!.split(' '))
     }
 
-    // clarify how many search queries to perform
-    println()
-    println("Enter the number of search queries:")
-    print("> ")
-    val numberOfSearchQueries = readLine()!!.toInt()
-
-    // perform search queries in sequence
-    repeat(numberOfSearchQueries) {
-        println()
-        println("Enter data to search people:")
-        print("> ")
-        val termToSearch = readLine()!!
-        val searchResults = search(termToSearch, inputMatrix)
-        if(searchResults.isNotEmpty()) {
-            println()
-            println("People found:")
-            for(line in searchResults)
-                println(line)
+    // user menu loop
+    while(true) {
+        println("")
+        println("=== Menu ===")
+        println("1. Find a person")
+        println("2. Print all people")
+        println("0. Exit")
+        //print("> ")
+        when(readln()) {
+            "1" -> findPerson(inputMatrix)
+            "2" -> printAllPeople(inputMatrix)
+            "0" -> break
+            else -> println("\nIncorrect option! Try again.")
         }
-        else
-            println("No matching people found.")
     }
+    println()
+    println("Bye!")
 }
 
-fun search(term:String, inputs:List<List<String>>):List<String> {
+fun findPerson(inputMatrix: MutableList<List<String>>) {
+    println()
+    println("Enter a name or email to search all suitable people.")
+    //print("> ")
+    val termToSearch = readLine()!!
+    val searchResults = searchForInputLinesThatContainTheTerm(termToSearch, inputMatrix)
+    if (searchResults.isNotEmpty())
+        for (line in searchResults)
+            println(line)
+    else
+        println("No matching people found.")
+}
+
+fun printAllPeople(inputMatrix: MutableList<List<String>>) {
+    println("=== List of people ===")
+    for(line in inputMatrix)
+        println(line.joinToString(" "))
+}
+
+fun searchForInputLinesThatContainTheTerm(term:String, inputs:List<List<String>>):List<String> {
     val results = mutableListOf<String>()
     for(line in inputs)
         for(item in line)
